@@ -1,0 +1,17 @@
+BEGIN TRY
+    BEGIN TRAN;
+
+    CREATE TABLE dbo.users (
+        user_id INT IDENTITY PRIMARY KEY,
+        username NVARCHAR(100) NOT NULL UNIQUE,
+        email NVARCHAR(255) NOT NULL UNIQUE,
+        is_active BIT DEFAULT 1,
+        created_at DATETIME DEFAULT GETDATE()
+    );
+
+    COMMIT TRAN;
+END TRY
+BEGIN CATCH
+    ROLLBACK TRAN;
+    THROW;
+END CATCH;
